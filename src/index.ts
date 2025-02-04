@@ -41,7 +41,8 @@ app.post('/api/login', (req, res) => {
         ok: true,
         message: 'Usuario loggeado con éxito',
         _id,
-        username
+        username,
+        token
       })
   } catch (error: unknown) {
     if (error instanceof Error) {
