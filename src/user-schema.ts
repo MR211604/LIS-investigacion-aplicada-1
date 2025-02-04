@@ -1,10 +1,17 @@
-import DbLocal from 'db-local'
+import { JSONFilePreset } from 'lowdb/node'
+import { User } from './types/user'
 
-const { Schema } = new DbLocal({ path: './db' })
+interface Data {
+  users: User[]
+}
 
-export const UserSchema = Schema('User', {
-  _id: { type: String, required: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true }
-})
+const defaultData: Data = { users: [] }
+
+const db = await JSONFilePreset<Data>('db.json', defaultData)
+
+const { users } = db.data
+
+export {
+  db,
+  users
+}

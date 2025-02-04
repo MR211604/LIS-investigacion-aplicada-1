@@ -1,6 +1,6 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
-import { User } from './types/types'
+import { User } from './types/user'
 import { UserRepository } from './user-repository'
 import jwt from 'jsonwebtoken'
 
@@ -8,17 +8,22 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 
-app.post('/api/register', (req, res) => {
+app.post('/api/register', async (req, res) => {
   try {
     const { username, email, password, confirmPassword } = req.body as User
-    const { _id } = UserRepository.createUser({ username, email, password, confirmPassword })
+    const { _id } = await UserRepository.createUser({ username, email, password, confirmPassword })
     res.status(201).json({
       ok: true,
       message: 'User created successfully',
       _id
     })
-  } catch (error) {
-    res.status(400).json({ error })
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(400).json({
+        ok: false,
+        message: error.message
+      })
+    }
   }
 })
 

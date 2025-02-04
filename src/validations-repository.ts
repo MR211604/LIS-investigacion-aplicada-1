@@ -3,7 +3,7 @@ export const Validations = {
     if (username === undefined) throw new Error('El nombre de usuario es requerido')
     if (typeof username !== 'string') throw new Error('El nombre de usuario debe ser un string')
   },
-
+  // comentario
   email (email: string) {
     if (email === undefined) throw new Error('El email es requerido')
     if (typeof email !== 'string') throw new Error('El email debe ser un string')
