@@ -14,7 +14,7 @@ app.post('/api/register', async (req, res) => {
     const { _id } = await UserRepository.createUser({ username, email, password, confirmPassword })
     res.status(201).json({
       ok: true,
-      message: 'User created successfully',
+      message: 'Usuario creado con éxito',
       _id
     })
   } catch (error: unknown) {
@@ -39,12 +39,17 @@ app.post('/api/login', (req, res) => {
     })
       .status(200).json({
         ok: true,
-        message: 'User logged in successfully',
+        message: 'Usuario loggeado con éxito',
         _id,
         username
       })
-  } catch (error) {
-    res.status(400).json(error)
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(400).json({
+        ok: false,
+        message: error.message
+      })
+    }
   }
 })
 
@@ -52,23 +57,20 @@ app.get('/api/protected-resource', (req, res) => {
   const token = req.header('Authorization')
 
   if (token !== req.cookies.token) {
-    res.status(401).json({ error: 'Unauthorized' })
+    res.status(401).json({ ok: false, error: 'No autorizado' })
   }
 
   try {
     const payload = jwt.verify(token as string, 'secret')
-
     res.status(200).json({
       ok: true,
       message: 'Recurso protegido',
       payload
     })
   } catch (error) {
-    res.status(401).json({
-      ok: false,
-      message: 'Token invalido',
-      error
-    })
+    if (error instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ ok: false, error: error.message })
+    }
   }
 })
 
@@ -77,10 +79,10 @@ app.post('/api/logout', (req, res) => {
   if (token === req.cookies.token) {
     res.clearCookie('token').status(200).json({
       ok: true,
-      message: 'Sesion cerrada con exito'
+      message: 'Sesión cerrada con éxito'
     })
   }
-  res.status(401).send('Token invalido')
+  res.status(401).json({ ok: false, message: 'Token inválido' })
 })
 
 app.listen(4000, () => {
