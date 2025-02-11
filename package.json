@@ -35,5 +35,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bcrypt"
+    ]
   }
 }
