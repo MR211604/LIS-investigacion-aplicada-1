@@ -1,0 +1,44 @@
+#Ejecutando DOCKER
+
+#Construir la imagen
+docker build -t investigacion1 .
+
+#Para verificar que la imagen se creo
+docker images
+
+#Ejecuta el contenedor Docker
+docker run -d -p 4000:4000 --name investigacion1 investigacion1
+
+#Para verificar que el contenedor esta ejecutándose
+docker ps
+
+#Aqui la api estaria funcionando mediante docker
+
+#Configurando kubernetes
+
+#Instalar en PowerShell kind para configurar kubernetes
+winget install Kubernetes.kind
+
+#Creando el cluster 
+kind create cluster --config kind-config.yaml
+
+#Para ver los nodos que existen al crear el cluster
+kubectl get nodes
+
+#Asegurar que kubernetes utiliza la imagen local
+kind load docker-image investigacion1 --name investigacion1
+
+#Crea el deployment
+kubectl apply -f deployment.yaml
+
+#Verifica el deployment
+kubectl get pods
+
+#Expone la API a traves de un servicio
+kubectl apply -f service.yaml
+
+#Verifica el estado del servicio
+kubectl get svc api-service
+
+#Redireccion de puerto por si no funciona con la configuración actual
+kubectl port-forward svc/api-service 30000:4000
