@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-web-lis-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-web-lis
+  template:
+    metadata:
+      labels:
+        app: api-web-lis
+    spec:
+      containers:
+      - name: api-web-lis-container
+        image: api-web-lis
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4000
