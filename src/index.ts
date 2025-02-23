@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser'
 import { User } from './types/user'
 import { UserRepository } from './user-repository'
 import jwt from 'jsonwebtoken'
+import os from 'os'
 
 const app = express()
 app.use(express.json())
@@ -66,7 +67,8 @@ app.get('/api/protected-resource', (req, res) => {
     res.status(200).json({
       ok: true,
       message: 'Recurso protegido',
-      payload
+      payload,
+      pod: os.hostname() // Se agrega el nombre del host, para comprobar el load balancing de los pods en k8s.
     })
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
