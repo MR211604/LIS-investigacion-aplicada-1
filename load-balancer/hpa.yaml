@@ -7,8 +7,8 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api-deployment
-  minReplicas: 2  # Número mínimo de réplicas
+    name: api-web-lis-deployment
+  minReplicas: 1  # Número mínimo de réplicas
   maxReplicas: 10 # Número máximo de réplicas
   metrics:
   - type: Resource
