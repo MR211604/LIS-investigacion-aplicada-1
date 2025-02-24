@@ -123,5 +123,5 @@ kubectl get hpa
 
 Generar carga para ver como las replicas aumentan. Esta puede generarse a través de <b>Postman</b> o como alternativa:
 ```
-kubectl run load-generator --image=busybox --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://localhost:80:80/; done"
+kubectl run load-generator --image=busybox --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://api-web-lis-deployment:80/; done"
 ```
