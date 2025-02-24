@@ -58,7 +58,7 @@ Asegurar que kubernetes utiliza la imagen local
 kind load docker-image api-web-lis --name api-web-lis
 ```
 
-#Crea el deployment
+Crea el deployment
 ```
 kubectl apply -f ./load-balancer/deployment.yaml
 ```
