@@ -53,9 +53,9 @@ Para ver los nodos que existen al crear el cluster
 kubectl get nodes
 ```
 
-Asegurar que kubernetes utiliza la imagen local
+Para ver los pods que se ejecutan
 ```
-kind load docker-image api-web-lis --name api-web-lis
+kubectl get nodes
 ```
 
 Crea el deployment
